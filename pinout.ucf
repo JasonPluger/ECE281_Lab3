@@ -1,3 +1,6 @@
+#Description: This file actually implements the Nexys2_top_shell.vhd
+#code and programs the board's LEDs, switches, and buttons.
+
 NET "btn(3)" LOC = H13;
 NET "btn(2)" LOC = E18;
 NET "btn(1)" LOC = D18;
