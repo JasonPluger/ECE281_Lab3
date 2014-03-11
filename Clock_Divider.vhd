@@ -14,7 +14,8 @@
 --
 -------------------------------------------------------------------------------
 --
--- Description : 
+-- Description : This file implements a clock bus which essentially "slows down" the clock
+--						so the user may use a slower clock speed when implementing a design.
 -- ClockBus(0) is   50.0Mhz      20.0ns
 -- ClockBus(1) is   25.0 Mhz     40.0ns
 -- ClockBus(2) is   12.5Mhz      80.0ns

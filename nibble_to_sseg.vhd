@@ -1,3 +1,5 @@
+--Description: This file is responsible for determining the state of ONE seven-segment LED on the Nexys2 board.
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

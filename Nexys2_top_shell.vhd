@@ -1,13 +1,12 @@
 ----------------------------------------------------------------------------------
 -- Company: USAFA
--- Engineer: Silva
+-- Engineer: Plguer
 -- 
 -- Create Date:    12:43:25 07/07/2012 
 -- Module Name:    Nexys2_Lab3top - Behavioral 
 -- Target Devices: Nexys2 Project Board
--- Tool versions: 
--- Description: This file is a shell for implementing designs on a NEXYS 2 board
--- 
+-- Tool versions: unknown
+-- Description: This file will implement an elevator control on a Nexys2 FPGA. 
 --
 ----------------------------------------------------------------------------------
 library IEEE;
@@ -23,10 +22,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity Nexys2_top_shell is
-    Port ( 	clk_50m : in STD_LOGIC;
+    Port ( 	clk_50m : in STD_LOGIC;--The clock 
 				btn : in  STD_LOGIC_VECTOR (3 DOWNTO 0);
 				switch : in STD_LOGIC_VECTOR (7 DOWNTO 0);
-				SSEG_AN : out STD_LOGIC_VECTOR (3 DOWNTO 0);
+				SSEG_AN : out STD_LOGIC_VECTOR (3 DOWNTO 0);--The seven-segment ANODE; controls whether a sevSeg "block" has power
 				SSEG : out STD_LOGIC_VECTOR (7 DOWNTO 0);
 				LED : out STD_LOGIC_VECTOR (7 DOWNTO 0));
 end Nexys2_top_shell;
