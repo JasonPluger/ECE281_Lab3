@@ -35,7 +35,7 @@ architecture Behavioral of Nexys2_top_shell is
 ---------------------------------------------------------------------------------------
 --This component converts a nibble to a value that can be viewed on a 7-segment display
 --Similar in function to a 7448 BCD to 7-seg decoder
---Inputs: 4-bit vector called "nibble"
+--Inputs: 4-bit vector called "nibble" (half of a byte)
 --Outputs: 8-bit vector "sseg" used for driving a single 7-segment display
 ---------------------------------------------------------------------------------------
 	COMPONENT nibble_to_sseg
@@ -86,17 +86,37 @@ signal nibble0, nibble1, nibble2, nibble3 : std_logic_vector(3 downto 0);
 signal sseg0_sig, sseg1_sig, sseg2_sig, sseg3_sig : std_logic_vector(7 downto 0);
 signal ClockBus_sig : STD_LOGIC_VECTOR (26 downto 0);
 
+-------------------------------------------------------------------------------------
+--The component declaration below is my Moore Elevator Controller; 
+-------------------------------------------------------------------------------------
+
+COMPONENT MooreElevatorController_Shell
+	Port ( clk : in STD_LOGIC;
+			 reset : in STD_LOGIC;
+			 stop : in STD_LOGIC;
+			 up_down : in STD_LOGIC;
+			 floor : out STD_LOGIC_VECTOR (3 downto 0));
+end COMPONENT;
 
 --------------------------------------------------------------------------------------
 --Insert your design's component declaration below	
 --------------------------------------------------------------------------------------
 
+COMPONENT MealyElevatorController_Shell
+	Port ( clk : in STD_LOGIC;
+			 reset : in STD_LOGIC;
+			 stop : in STD_LOGIC;
+			 up_down : in STD_LOGIC;
+			 floor : out STD_LOGIC_VECTOR (3 downto 0);
+			 nextfloor : out STD_LOGIC_VECTOR (7 downto 0));
+end COMPONENT;
 
 
---------------------------------------------------------------------------------------
---Insert any required signal declarations below
---------------------------------------------------------------------------------------
-
+----------------------------------------------------------------------------------------
+----signals for MooreElevatorController_Shell - not used in current implemenation
+----------------------------------------------------------------------------------------
+--signal clk_sig, reset_sig, stop_sig, up_down_sig : STD_LOGIC;
+--signal floor : STD_LOGIC_VECTOR (3 downto 0);
 
 
 begin
@@ -113,6 +133,19 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 		clk => clk_50m,
 		clockbus => ClockBus_sig
 	);
+	
+--------------------------------------------------------------------------------------------
+--This code instantiates the Moore Elevator Controller
+--------------------------------------------------------------------------------------------
+
+	Moore_Elev_Controller : MooreElevatorController_Shell PORT MAP(
+		clk => ClockBus_sig(25),
+		reset => btn(3),
+		stop => switch(1),
+		up_down => switch(0),
+		floor => nibble0
+	);
+		
 
 --------------------------------------------------------------------------------------	
 --Code below drives the function of the 7-segment displays. 
@@ -124,30 +157,30 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 --		  Example: if you are not using 7-seg display #3 set nibble3 to "0000"
 --------------------------------------------------------------------------------------
 
-nibble0 <= 
-nibble1 <= 
-nibble2 <= 
-nibble3 <= 
+--nibble0 <= floor;
+nibble1 <= "0000";
+nibble2 <= "0000";
+nibble3 <= "0000";
 
---This code converts a nibble to a value that can be displayed on 7-segment display #0
+--This instantition converts a nibble to a value that can be displayed on 7-segment display #0
 	sseg0: nibble_to_sseg PORT MAP(
 		nibble => nibble0,
 		sseg => sseg0_sig
 	);
 
---This code converts a nibble to a value that can be displayed on 7-segment display #1
+--This instantition converts a nibble to a value that can be displayed on 7-segment display #1
 	sseg1: nibble_to_sseg PORT MAP(
 		nibble => nibble1,
 		sseg => sseg1_sig
 	);
 
---This code converts a nibble to a value that can be displayed on 7-segment display #2
+--This instantition converts a nibble to a value that can be displayed on 7-segment display #2
 	sseg2: nibble_to_sseg PORT MAP(
 		nibble => nibble2,
 		sseg => sseg2_sig
 	);
 
---This code converts a nibble to a value that can be displayed on 7-segment display #3
+--This instantition converts a nibble to a value that can be displayed on 7-segment display #3
 	sseg3: nibble_to_sseg PORT MAP(
 		nibble => nibble3,
 		sseg => sseg3_sig
@@ -168,7 +201,7 @@ nibble3 <=
 	);
 
 -----------------------------------------------------------------------------
---Instantiate the design you with to implement below and start wiring it up!:
+--Instantiate the design you wish to implement below and start wiring it up!:
 -----------------------------------------------------------------------------
 
 
