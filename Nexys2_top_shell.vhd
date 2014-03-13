@@ -95,7 +95,7 @@ COMPONENT MooreElevatorController_Shell
 			 reset : in STD_LOGIC;
 			 stop : in STD_LOGIC;
 			 up_down : in STD_LOGIC;
-			 floor : out STD_LOGIC_VECTOR (3 downto 0));
+			 floor : out STD_LOGIC_VECTOR (7 downto 0));
 end COMPONENT;
 
 --------------------------------------------------------------------------------------
@@ -113,10 +113,10 @@ end COMPONENT;
 
 
 ----------------------------------------------------------------------------------------
-----signals for MooreElevatorController_Shell - not used in current implemenation
+----signals for MooreElevatorController_Shell - used in prime number implementation
 ----------------------------------------------------------------------------------------
 --signal clk_sig, reset_sig, stop_sig, up_down_sig : STD_LOGIC;
---signal floor : STD_LOGIC_VECTOR (3 downto 0);
+signal floor_sig : STD_LOGIC_VECTOR (7 downto 0);
 
 
 begin
@@ -139,11 +139,11 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 --------------------------------------------------------------------------------------------
 
 	Moore_Elev_Controller : MooreElevatorController_Shell PORT MAP(
-		clk => ClockBus_sig(25),
+		clk => ClockBus_sig(24),
 		reset => btn(3),
 		stop => switch(1),
 		up_down => switch(0),
-		floor => nibble0
+		floor => floor_sig
 	);
 		
 
@@ -157,8 +157,8 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 --		  Example: if you are not using 7-seg display #3 set nibble3 to "0000"
 --------------------------------------------------------------------------------------
 
---nibble0 <= floor;
-nibble1 <= "0000";
+nibble0 <= floor_sig(3 downto 0);
+nibble1 <= floor_sig(7 downto 4);
 nibble2 <= "0000";
 nibble3 <= "0000";
 
@@ -200,9 +200,6 @@ nibble3 <= "0000";
 		sseg => SSEG
 	);
 
------------------------------------------------------------------------------
---Instantiate the design you wish to implement below and start wiring it up!:
------------------------------------------------------------------------------
 
 
 end Behavioral;
