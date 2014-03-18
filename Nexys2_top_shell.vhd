@@ -93,9 +93,10 @@ signal ClockBus_sig : STD_LOGIC_VECTOR (26 downto 0);
 COMPONENT MooreElevatorController_Shell
 	Port ( clk : in STD_LOGIC;
 			 reset : in STD_LOGIC;
-			 stop : in STD_LOGIC;
-			 up_down : in STD_LOGIC;
-			 floor : out STD_LOGIC_VECTOR (7 downto 0));
+--			 stop : in STD_LOGIC;
+--			 up_down : in STD_LOGIC;
+			 input : in STD_LOGIC_VECTOR (2 downto 0);
+			 floor : out STD_LOGIC_VECTOR (2 downto 0));
 end COMPONENT;
 
 --------------------------------------------------------------------------------------
@@ -116,7 +117,7 @@ end COMPONENT;
 ----signals for MooreElevatorController_Shell - used in prime number implementation
 ----------------------------------------------------------------------------------------
 --signal clk_sig, reset_sig, stop_sig, up_down_sig : STD_LOGIC;
-signal floor_sig : STD_LOGIC_VECTOR (7 downto 0);
+signal floor_sig : STD_LOGIC_VECTOR (2 downto 0);
 
 
 begin
@@ -141,8 +142,11 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 	Moore_Elev_Controller : MooreElevatorController_Shell PORT MAP(
 		clk => ClockBus_sig(24),
 		reset => btn(3),
-		stop => switch(1),
-		up_down => switch(0),
+		input(0) => switch(0),
+		input(1) => switch(1),
+		input(2) => switch(2),
+--		stop => switch(1),
+--		up_down => switch(0),
 		floor => floor_sig
 	);
 		
@@ -156,9 +160,13 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 --Note: You must set each "nibble" signal to a value. 
 --		  Example: if you are not using 7-seg display #3 set nibble3 to "0000"
 --------------------------------------------------------------------------------------
-
-nibble0 <= floor_sig(3 downto 0);
-nibble1 <= floor_sig(7 downto 4);
+--code below used for prime-number output implementation
+--nibble0 <= floor_sig(3 downto 0);
+--nibble1 <= floor_sig(7 downto 4);
+--nibble2 <= "0000";
+--nibble3 <= "0000";
+nibble0 <= "0" & floor_sig(2 downto 0);
+nibble1 <= "0000";
 nibble2 <= "0000";
 nibble3 <= "0000";
 
