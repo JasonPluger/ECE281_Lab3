@@ -1,6 +1,6 @@
 ECE281_Lab3
 ===========
-###Analysis
+###Explaination
 ####Moore Elevator Controller:
   To implement the moore elevator controller, I copied my MooreElevatorController_Shell.vhd file into my Nexys2_top_shell project and declared it as a component. I then created an instance of the MooreElevatorController within my top_shell and assigned the inputs to the 1.5Hz signal from the clockBus, reset to btn(3), and up_down and stop signals to switches on the board. I assigned my floor number output to nibble(0) so that it would display on seven-segment display #0. 
   
