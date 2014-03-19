@@ -30,10 +30,10 @@ This code is better because each seven-segment display is at least getting some 
 
 Functionality: Got my Moore Elevator Controller checked off by Dr. Neebel on 13 March 14 at 1428 - basic functionality.
 
-               Got my prime number elevator checked on my Dr. Neebel on 13 March at 1530. 
+Got my prime number elevator checked on my Dr. Neebel on 13 March at 1530. 
                
-               
-               Sent a video of my switch-controlled elevator to Dr. Neebel and got it checked on 18 March 14
+
+Sent a video of my switch-controlled elevator to Dr. Neebel and got it checked on 18 March 14
 
 
 Documentation: Prelab: C3C ElSawaay explained his schematic to me, which made it click that each "component" statement in the Nexsys2 top shell module corresponds to a module inside the top shell. Pictorially, this is the same as having a box that does something inside a bigger box.
